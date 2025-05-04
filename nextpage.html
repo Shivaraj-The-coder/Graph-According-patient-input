@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<style>
+body{
+background-color: #000;
+margin: 0;
+}
+h1,h2,h3,h4,p{
+margin: 0;
+color: aliceblue;
+}
+span{
+padding: 0 10px; color: #dd7dc3;
+}
+.flx {
+display: flex;
+justify-content: space-around;
+align-items: end;
+padding: 10px 0;
+}
+.flx h3{
+padding: 10px 0;
+}
+#graph-color {
+background-color: red;
+height: 50px;
+width: 30px;
+border-radius: 5px;
+}
+
+.chart-outer-flex {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+gap: 5%;
+padding-top: 40px;
+}
+.chart-outer {
+background-color: #4999a3;
+text-align: center;
+border-radius: 5px;
+padding: 20px 0 0 0;
+position: relative;
+flex: 0 40%;
+color: aliceblue;
+}
+
+.chart-content {
+flex: 0 30%;
+}
+.chart-outer > h2{
+padding-bottom: 20px;
+}
+.trial{
+text-align: center;
+}
+
+.content-according-to-inputs {
+background-color: #82c7b5;
+margin: 30px auto 0 auto;
+max-width: 500px;
+padding: 10px;
+border-radius: 20px;
+}
+.flx{
+position: relative;
+}
+.flx:before {
+content: '';
+position: absolute;
+width: 100%;
+height: 1px;
+left: 0px;
+background: rgba(255, 255, 255, 0.50);
+bottom: 0px;
+}
+#graph-color {
+background-color: #f90;
+border-radius: 10px;
+bottom: 0px;
+height: 138px;
+left: 41%;
+position: absolute;
+width: 60px;
+transition: 0.5s all;
+}
+span.points {
+font-size: 12px;
+font-weight: bolder;
+font-family: cursive;
+position: absolute;
+top: -20px;
+left: 0;
+right: 0;
+border-radius: 5px 5px 0px 0px;
+padding: 2px 0;
+}
+.heading{
+font-size: 24px;
+color: #fff;
+background-color: #4999a3;
+text-align: center;
+margin-bottom: 20px;
+padding: 20px 0;
+border-radius: 0 80px 0 50px;
+
+}
+.chart-content h2 b {
+color: #f42e2e;
+font-size: 30px;
+}
+.right {
+font-weight:900;
+}.left {
+font-weight: 900;
+font-family: monospace;
+}
+#charttext h2 {
+color: aliceblue;
+font-size: 25px;
+}
+.flx:last-child .flx:before {
+content: none;
+}
+
+</style>
+<body>
+<div class="center">
+<div class="heading">This page content and graph color graph height is all acording to the user daTa dynnamically</div>
+<div class="trial">
+<h2> Acording to medical report. your score of <span class="scoreDisplay"></span>is defined as <span id="osa"></span></h2>
+<div class="content-according-to-inputs">
+<h2>insights</h2>
+<h3 id="insight"></h3>
+</div>
+</div>
+
+<div class="chart-outer-flex">
+<div class ="chart-outer">
+<h2>Score Graph charts</h2>
+<div class="flx">
+<div class="left">30+</div>
+<div class="right" id="sev">Severe</div>
+</div>
+<div class="flx">
+<div class="left">15 - 30</div>
+<div class="right" id="mod">moderate</div>
+</div>
+<div class="flx">
+<div class="left">5 - 14</div>
+<div class="right" id="mil">mild</div>
+</div>
+<div class="flx">
+<div class="left">0 - 4</div>
+<div class="right" id="nor">normal</div>
+</div>
+<div id="graph-color"><h2><span class="points"></span></h2></div>
+</div>
+<div class="chart-content">
+<span id="charttext"></span>
+<h4>Result level as defined by xyz hospital </h4>
+</div>
+</div>
+</div>
+
+<script src="./index.js"></script>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const score = urlParams.get('score');
+const age = urlParams.get('age');
+const gender = urlParams.get('gender');
+
+
+document.querySelector(".scoreDisplay").innerHTML = score;
+document.querySelector(".points").innerHTML = score;
+
+var osa = document.getElementById('osa');
+var insight = document.getElementById('insight')
+var charttext = document.getElementById('charttext')
+// men
+if (score < 5 && gender === "male") {
+osa.innerHTML = "Normal";
+insight.innerHTML = "Snoring is a common symtom of xyz."
+charttext.innerHTML = `<h2><b>Normal</b>: A man has a normal medical report based on his medical report through his checkup score</h2>`
+}
+else if (score >= 5 && score < 15 && gender === "male"){
+osa.innerHTML = "Mild";
+insight.innerHTML = "Snoring is a common symtom of xyz."
+charttext.innerHTML = `<h2><b>Mild</b>: A man has a mild medical problem based on his medical report through his checkup score</h2>`
+
+}
+else if (score >= 15 && score < 31 && gender === "male"){
+osa.innerHTML = "Moderate";
+insight.innerHTML = "Snoring is a common symtom of xyz."
+charttext.innerHTML = `<h2><b>moderate</b>: A man has a mod medical problem based on his medical report through his checkup score</h2>`
+
+}
+else if (score > 30 && gender === "male"){
+osa.innerHTML = "Severe";
+insight.innerHTML = "Snoring is a common symtom of xyz."
+charttext.innerHTML = `<h2><b>severe</b>: A man has a highly serious medical problem based on his medical report through his checkup score immediate action required</h2>`
+
+}
+// women
+else if (score < 5 && gender === "female"){
+osa.innerHTML = "Normal";
+insight.innerHTML = "menopause can lead to change in sleepof xyz."
+charttext.innerHTML = `<h2><b>Normal</b>: A women has a normal  medical report based on her score</h2>`
+
+}
+else if (score >= 5 && score < 15 && gender === "female"){
+osa.innerHTML = "Mild";
+insight.innerHTML = "menopause can lead to change in sleepof xyz."
+charttext.innerHTML = `<h2><b>Mild</b>: A women has a medical problem based on her medical report through his checkup score immediate action required</h2>`
+
+}
+else if (score >= 15 && score < 31 && gender === "female" ){
+osa.innerHTML = "Moderate";
+insight.innerHTML = "menopause can lead to change in sleepof xyz."
+charttext.innerHTML = `<h2><b>Moderate</b>: A women has a moderate based on his medical report through his checkup score immediate action required</h2>`
+
+}
+else if (score > 30  && gender === "female" ){
+osa.innerHTML = "Severe";
+insight.innerHTML = "menopause can lead to change in sleepof xyz."
+charttext.innerHTML = `<h2><b>Severe</b>: A women has a high medical problem based on her checkup score immediate action required</h2>`
+
+}
+else if (score < 5  && gender === "female" && age > 40 ){
+osa.innerHTML = "Normal";
+insight.innerHTML = "menopause can lead to change in sleep pattern. aged between 45-54 years"
+charttext.innerHTML = `<h2><b>Severe</b>: A women has a Normal </h2>`
+
+}
+else if (score > 5 && score < 15 && gender === "female" && age > 40){
+osa.innerHTML = "Mild";
+insight.innerHTML = "menopause can lead to change in sleepof xyz."
+charttext.innerHTML = `<h2><b>Severe</b>: A women has a mild problem </h2>`
+
+}
+
+
+// graph code
+var sevs = document.querySelectorAll('.points');
+var graphHc = document.getElementById('graph-color');
+function applyColorToElements(elements, color) {
+elements.forEach(function(element) {
+element.style.color = color;
+});
+}
+function calculateHeight(score) {
+maxHeight = 150;
+if (score < 5) {
+return 40 + ((score - 5)/5)*39; // Normal height
+} else if (score >= 5 && score < 15) {
+return 40 + ((score - 5) / 10) * 39; // Mild height
+} else if (score >= 15 && score < 31) {
+return 79 + ((score - 15) / 15) * 39; // Moderate height
+} else if (score > 30) {
+return maxHeight // Severe height
+}
+}
+var height = calculateHeight(score);
+if (osa.innerHTML == "Normal"){
+var nor = document.getElementById('nor').style.color = "#14ae5c";
+applyColorToElements(sevs, "#14ae5c");
+graphHc.style.backgroundColor = "#14ae5c";
+} 
+else if(osa.innerHTML == "Mild"){
+var mil = document.getElementById('mil').style.color = "#ddc700";
+applyColorToElements(sevs, "#ddc700");
+graphHc.style.backgroundColor = "#ddc700";
+}
+else if(osa.innerHTML == "Moderate"){
+var mod = document.getElementById('mod').style.color = "#ff9900";
+applyColorToElements(sevs, "#ff9900");
+graphHc.style.backgroundColor = "#ff9900";
+}
+else if(osa.innerHTML == "Severe"){
+var sev = document.getElementById('sev').style.color = "#be4343";
+applyColorToElements(sevs, "#be4343");
+graphHc.style.backgroundColor = "#be4343";
+document.querySelector(".points").innerHTML = "above 30";
+
+}
+graphHc.style.height = `${height}px`;
+
+</script>
+
+</body>
+
+</html>
